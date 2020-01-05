@@ -9,6 +9,13 @@ import Register from "./components/Register/Register";
 import Particles from "react-particles-js";
 import "./App.css";
 
+<<<<<<< HEAD
+=======
+const app = new Clarifai.App({
+  apiKey: "???"
+});
+
+>>>>>>> 7e6e3906c0342d7ae543deed1c847d1da6eec448
 const params = {
   particles: {
     number: {
