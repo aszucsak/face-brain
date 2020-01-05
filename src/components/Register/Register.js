@@ -15,7 +15,7 @@ function Register({ onRouteChange, loadUser }) {
     setEmail(e.target.value);
   };
   const onClickSubmit = () => {
-    fetch("http://localhost:3001/register", {
+    fetch("https://face-brain-api.herokuapp.com/register", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -26,11 +26,14 @@ function Register({ onRouteChange, loadUser }) {
     })
       .then(result => result.json())
       .then(user => {
-        if (user) {
+        if (user.id) {
           loadUser(user);
           onRouteChange("home");
+        } else {
+          throw Error(user);
         }
-      });
+      })
+      .catch(err => console.log(err.message));
   };
 
   return (

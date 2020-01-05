@@ -14,7 +14,7 @@ function Signin({ onRouteChange, loadUser }) {
   };
 
   const onSubmitSignIn = () => {
-    fetch("http://localhost:3001/signin", {
+    fetch("https://face-brain-api.herokuapp.com/signin", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -27,8 +27,11 @@ function Signin({ onRouteChange, loadUser }) {
         if (user.id) {
           loadUser(user);
           onRouteChange("home");
+        } else {
+          throw Error(user);
         }
-      });
+      })
+      .catch(err => console.log(err.message));
   };
 
   return (

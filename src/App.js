@@ -7,12 +7,7 @@ import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
 import Particles from "react-particles-js";
-import Clarifai from "clarifai";
 import "./App.css";
-
-const app = new Clarifai.App({
-  apiKey: "ec07840adb754aad98c76528d6679611"
-});
 
 const params = {
   particles: {
@@ -87,11 +82,17 @@ class App extends Component {
     this.setState(
       state => ({ imageUrl: state.input }),
       () =>
-        app.models
-          .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+        fetch("https://face-brain-api.herokuapp.com/imageurl", {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            input: this.state.input
+          })
+        })
+          .then(response => response.json())
           .then(response => {
             if (response) {
-              fetch("http://localhost:3001/image", {
+              fetch("https://face-brain-api.herokuapp.com/image", {
                 method: "put",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
